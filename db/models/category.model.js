@@ -9,15 +9,8 @@ const CategorySchema = {
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  name: {
-    type: DataTypes.STRING,
-    unique: true,
-    allowNull: false,
-  },
-  image: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+  name: { type: DataTypes.STRING, unique: true, allowNull: false },
+  image: { type: DataTypes.STRING, allowNull: false },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
@@ -25,15 +18,10 @@ const CategorySchema = {
     defaultValue: Sequelize.NOW,
   },
 };
-
 class Category extends Model {
   static associate(models) {
-    this.hasMany(models.Product, {
-      as: 'products',
-      foreignKey: 'categoryId',
-    });
+    this.hasMany(models.Product, { as: 'products', foreignKey: 'categoryId' });
   }
-
   static config(sequelize) {
     return {
       sequelize,
