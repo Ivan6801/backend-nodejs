@@ -1,19 +1,15 @@
 'use strict';
-const { DataTypes } = require('sequelize');
-
-const { CUSTOMER_TABLE } = require('./../models/customer.model');
 
 module.exports = {
-  up: async (queryInterface) => {
-    await queryInterface.changeColumn(CUSTOMER_TABLE, 'user_id', {
-      field: 'user_id',
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.addColumn('users', 'role', {
+      type: Sequelize.STRING,
       allowNull: false,
-      type: DataTypes.INTEGER,
-      unique: true,
+      defaultValue: 'customer',
     });
   },
 
   down: async (queryInterface) => {
-    // await queryInterface.dropTable(CUSTOMER_TABLE);
+    await queryInterface.removeColumn('users', 'role');
   },
 };
