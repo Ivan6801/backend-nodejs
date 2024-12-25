@@ -11,10 +11,12 @@ const OrderSchema = {
     type: DataTypes.INTEGER,
   },
   customerId: {
-    field: 'customer_id',
+    type: Sequelize.INTEGER,
     allowNull: false,
-    type: DataTypes.INTEGER,
-    references: { model: CUSTOMER_TABLE, key: 'id' },
+    references: {
+      model: 'customers',
+      key: 'id',
+    },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL',
   },

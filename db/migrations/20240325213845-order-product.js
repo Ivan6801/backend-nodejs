@@ -1,15 +1,42 @@
 'use strict';
 
-const {
-  ORDER_PRODUCT_TABLE,
-  OrderProductSchema,
-} = require('./../models/order-product.model');
-
 module.exports = {
-  up: async (queryInterface) => {
-    await queryInterface.createTable(ORDER_PRODUCT_TABLE, OrderProductSchema);
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('orders', {
+      id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      customerId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'customers',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      },
+      total: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.NOW,
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.NOW,
+      },
+    });
   },
+
   down: async (queryInterface) => {
-    await queryInterface.dropTable(ORDER_PRODUCT_TABLE);
+    await queryInterface.dropTable('orders');
   },
 };
