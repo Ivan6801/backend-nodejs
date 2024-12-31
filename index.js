@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const routerApi = require('./routes');
 const { checkApiKey } = require('./middlewares/auth.handler');
+const passport = require('passport');
 
 const {
   logErrors,
@@ -14,6 +15,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(passport.initialize());
 
 const whitelist = ['http://127.0.0.1:5500'];
 const options = {
@@ -26,6 +28,8 @@ const options = {
   },
 };
 app.use(cors(options));
+
+require('./utils/auth');
 
 app.get('/', (req, res) => {
   res.send('Hola mi server en express');
