@@ -13,7 +13,8 @@ const service = new ProductsService();
 
 router.get('/', async (req, res, next) => {
   try {
-    const products = await service.find();
+    const query = req.query;
+    const products = await service.find(query);
     res.json(products);
   } catch (error) {
     next(error);
